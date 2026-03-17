@@ -9,7 +9,7 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#080808;--bg2:#0f0f0f;--bg3:#141414;
+  --bg:#080808;--bg2:#0f0f0f;
   --white:#f5f2ee;--off:#a09a94;--dim:#3a3632;
   --cyan:#5eead4;--purple:#c084fc;
   --border:rgba(245,242,238,0.07);--border2:rgba(245,242,238,0.12);
@@ -43,9 +43,9 @@ nav::before{content:'';position:absolute;inset:0;background:linear-gradient(to b
 .admin-badge{display:none;align-items:center;gap:.45rem;background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.28);border-radius:100px;padding:.32rem .85rem;font-size:.68rem;letter-spacing:.05em;color:var(--purple)}
 .admin-badge.show{display:flex}
 .admin-dot{width:5px;height:5px;background:var(--purple);border-radius:50%;box-shadow:0 0 5px var(--purple)}
-.admin-logout{background:none;border:none;color:rgba(192,132,252,.5);font-size:.8rem;padding:0;line-height:1;transition:color .2s}
-.admin-logout:hover{color:var(--purple)}
-.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;background:rgba(255,255,255,.05);border:1px solid var(--border2);border-radius:8px;padding:.48rem .55rem;width:36px;height:36px}
+.admin-logout-btn{background:none;border:none;color:rgba(192,132,252,.5);font-size:.8rem;padding:0;line-height:1;transition:color .2s}
+.admin-logout-btn:hover{color:var(--purple)}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;background:rgba(255,255,255,.05);border:1px solid var(--border2);border-radius:8px;padding:.48rem .55rem;width:36px;height:36px;cursor:pointer}
 .nav-burger span{display:block;width:16px;height:1.5px;background:var(--white);border-radius:2px;transition:transform .28s,opacity .28s}
 .nav-burger.open span:first-child{transform:translateY(3.5px) rotate(45deg)}
 .nav-burger.open span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
@@ -100,16 +100,14 @@ section{padding:7rem 3rem}
 #portfolio{background:var(--bg)}
 .ph{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.2rem;flex-wrap:wrap;gap:1.5rem}
 .ph-r{font-size:.84rem;color:var(--off);max-width:280px;line-height:1.75;font-weight:300}
-
-/* TABS */
 .port-tabs{display:flex;gap:.25rem;margin-bottom:2.5rem;background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:100px;padding:.32rem;width:fit-content}
-.ptab{font-size:.72rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--off);background:none;border:none;padding:.42rem 1.3rem;border-radius:100px;transition:color .22s,background .22s}
+.ptab{font-size:.72rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--off);background:none;border:none;padding:.42rem 1.3rem;border-radius:100px;transition:color .22s,background .22s;cursor:pointer}
 .ptab.active{color:var(--white);background:rgba(255,255,255,.1)}
 .ptab:hover:not(.active){color:rgba(245,242,238,.6)}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
 
-/* LONG-FORM GRID — asymmetric editorial */
+/* LONG-FORM GRID */
 .pgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--border)}
 .pcell{background:var(--bg);position:relative;min-height:260px}
 .pcell:nth-child(1){grid-column:1/3;min-height:400px}
@@ -118,12 +116,12 @@ section{padding:7rem 3rem}
 .pcell:nth-child(4){grid-column:2/4;min-height:400px}
 .pcell:nth-child(n+5){grid-column:auto}
 
-/* REELS GRID — portrait 9:16 */
+/* REELS GRID */
 .rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:2px;background:var(--border)}
 .rcell{background:var(--bg);position:relative}
 
 /* ADD ROW */
-.add-row{grid-column:1/-1;background:var(--bg);display:none;align-items:center;justify-content:center;padding:2.4rem;transition:background .28s}
+.add-row{grid-column:1/-1;background:var(--bg);display:none;align-items:center;justify-content:center;padding:2.4rem;transition:background .28s;cursor:pointer}
 .add-row:hover{background:var(--bg2)}
 .add-inner{display:flex;align-items:center;gap:.65rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);transition:color .28s}
 .add-row:hover .add-inner{color:var(--white)}
@@ -134,38 +132,36 @@ body.admin .add-row{display:flex}
 /* VIDEO CARD — long form */
 .vc{position:relative;overflow:hidden;width:100%;height:100%;min-height:inherit}
 .vc-thumb{position:absolute;inset:0}
-.vc-thumb iframe{width:100%;height:100%;border:none;pointer-events:none;transform:scale(1.05);transition:transform .7s}
+.vc-thumb iframe{width:100%;height:100%;border:none;pointer-events:all;transform:scale(1.05);transition:transform .7s}
 .vc:hover .vc-thumb iframe{transform:scale(1.09)}
-.vc-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.9) 0%,rgba(8,8,8,.15) 55%,transparent 100%);transition:opacity .35s}
-.vc:hover .vc-shade{opacity:.75}
-.vc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.88);width:48px;height:48px;border:1px solid rgba(245,242,238,.28);border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(245,242,238,.06);backdrop-filter:blur(6px);opacity:0;transition:opacity .28s,transform .28s}
-.vc:hover .vc-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.vc-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.88) 0%,rgba(8,8,8,.1) 50%,transparent 100%);pointer-events:none;transition:opacity .35s}
+.vc:hover .vc-shade{opacity:.6}
+.vc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border:1px solid rgba(245,242,238,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(245,242,238,.08);backdrop-filter:blur(6px);pointer-events:none;transition:opacity .28s}
+.vc:hover .vc-play{opacity:0}
 .vc-play svg{fill:var(--white);margin-left:3px}
-.vc-info{position:absolute;bottom:0;left:0;right:0;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;gap:.8rem}
+.vc-info{position:absolute;bottom:0;left:0;right:0;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;gap:.8rem;pointer-events:none}
 .vc-title{font-family:'DM Serif Display',serif;font-size:1.05rem;letter-spacing:-.01em;line-height:1.2}
 .pcell:nth-child(1) .vc-title,.pcell:nth-child(4) .vc-title{font-size:1.4rem}
 .vc-tag{font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan);background:rgba(94,234,212,.09);border:1px solid rgba(94,234,212,.2);padding:.15rem .55rem;border-radius:100px;white-space:nowrap;flex-shrink:0}
-.vc-del{position:absolute;top:.75rem;right:.75rem;width:28px;height:28px;background:rgba(8,8,8,.72);border:1px solid rgba(245,242,238,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--off);font-size:.68rem;opacity:0;pointer-events:none;transition:opacity .2s,color .2s;backdrop-filter:blur(4px)}
+.vc-del{position:absolute;top:.75rem;right:.75rem;width:28px;height:28px;background:rgba(8,8,8,.75);border:1px solid rgba(245,242,238,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--off);font-size:.68rem;opacity:0;pointer-events:none;transition:opacity .2s,color .2s;backdrop-filter:blur(4px)}
 body.admin .vc:hover .vc-del{opacity:1;pointer-events:all}
-.vc-del:hover{color:#fff;border-color:rgba(255,60,60,.4)}
+.vc-del:hover{color:#fff;border-color:rgba(255,60,60,.5)}
 
-/* VIDEO CARD — reel (portrait) */
+/* VIDEO CARD — reel */
 .rc{position:relative;overflow:hidden;width:100%;aspect-ratio:9/16;min-height:280px}
 .rc-thumb{position:absolute;inset:0}
-.rc-thumb iframe{width:100%;height:100%;border:none;pointer-events:none;transform:scale(1.05);transition:transform .7s}
+.rc-thumb iframe{width:100%;height:100%;border:none;pointer-events:all;transform:scale(1.05);transition:transform .7s}
 .rc:hover .rc-thumb iframe{transform:scale(1.09)}
-.rc-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.9) 0%,rgba(8,8,8,.15) 55%,transparent 100%)}
-.rc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.88);width:44px;height:44px;border:1px solid rgba(245,242,238,.28);border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(245,242,238,.06);backdrop-filter:blur(5px);opacity:0;transition:opacity .28s,transform .28s}
-.rc:hover .rc-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.rc-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.88) 0%,rgba(8,8,8,.1) 50%,transparent 100%);pointer-events:none}
+.rc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border:1px solid rgba(245,242,238,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(245,242,238,.08);backdrop-filter:blur(5px);pointer-events:none;transition:opacity .28s}
+.rc:hover .rc-play{opacity:0}
 .rc-play svg{fill:var(--white);margin-left:3px}
-.rc-info{position:absolute;bottom:0;left:0;right:0;padding:1rem 1.1rem;display:flex;justify-content:space-between;align-items:flex-end;gap:.6rem}
+.rc-info{position:absolute;bottom:0;left:0;right:0;padding:1rem 1.1rem;display:flex;justify-content:space-between;align-items:flex-end;gap:.6rem;pointer-events:none}
 .rc-title{font-family:'DM Serif Display',serif;font-size:.92rem;letter-spacing:-.01em;line-height:1.2}
 .rc-tag{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);background:rgba(94,234,212,.09);border:1px solid rgba(94,234,212,.2);padding:.12rem .48rem;border-radius:100px;white-space:nowrap;flex-shrink:0}
-.rc-del{position:absolute;top:.65rem;right:.65rem;width:26px;height:26px;background:rgba(8,8,8,.72);border:1px solid rgba(245,242,238,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--off);font-size:.65rem;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(4px)}
+.rc-del{position:absolute;top:.65rem;right:.65rem;width:26px;height:26px;background:rgba(8,8,8,.75);border:1px solid rgba(245,242,238,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--off);font-size:.65rem;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(4px)}
 body.admin .rc:hover .rc-del{opacity:1;pointer-events:all}
-.rc-del:hover{color:#fff;border-color:rgba(255,60,60,.4)}
-
-/* EMPTY STATE */
+.rc-del:hover{color:#fff;border-color:rgba(255,60,60,.5)}
 .empty-state{padding:4rem 2rem;text-align:center;color:var(--dim);font-size:.82rem;letter-spacing:.06em}
 
 /* SERVICES */
@@ -187,7 +183,7 @@ body.admin .rc:hover .rc-del{opacity:1;pointer-events:all}
 #contact{background:var(--bg);position:relative;overflow:hidden}
 .cglow{position:absolute;width:700px;height:500px;background:radial-gradient(ellipse,rgba(94,234,212,.04) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
 .cwrap{position:relative;display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:start}
-.cleft .body{font-size:.9rem;font-weight:300;line-height:1.82;color:var(--off);margin:1.2rem 0 2rem}
+.cleft .body-txt{font-size:.9rem;font-weight:300;line-height:1.82;color:var(--off);margin:1.2rem 0 2rem}
 .clinks{display:flex;flex-direction:column;gap:.55rem}
 .clink{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.05rem;border:1px solid var(--border);border-radius:11px;text-decoration:none;color:var(--off);font-size:.82rem;transition:color .22s,border-color .22s,background .22s}
 .clink:hover{color:var(--white);border-color:var(--border2);background:rgba(255,255,255,.022)}
@@ -226,36 +222,31 @@ footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify
 #pwBg .m{max-width:360px}
 .pw-wrap{position:relative}
 .pw-wrap input{padding-right:2.8rem}
-.pw-eye{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--off);font-size:.95rem;padding:0;transition:color .2s}
+.pw-eye{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--off);font-size:.95rem;padding:0;transition:color .2s;cursor:pointer}
 .pw-eye:hover{color:var(--white)}
 .pw-err{font-size:.7rem;color:#f87171;margin-top:.4rem;min-height:1em}
 #loginBtn{width:100%;margin-top:.9rem;padding:.82rem}
+.admin-hint{position:fixed;bottom:1.4rem;right:1.4rem;z-index:490;font-size:.75rem;color:rgba(255,255,255,.06);padding:.4rem .75rem;border:1px solid transparent;border-radius:100px;transition:color .3s,border-color .3s;cursor:pointer;background:none;border:none}
+.admin-hint:hover{color:rgba(192,132,252,.35)}
 
-/* ADMIN HINT */
-.admin-hint{position:fixed;bottom:1.4rem;right:1.4rem;z-index:490;font-size:.7rem;color:rgba(255,255,255,.08);padding:.4rem .75rem;border:1px solid transparent;border-radius:100px;transition:color .3s,border-color .3s}
-.admin-hint:hover{color:rgba(192,132,252,.35);border-color:rgba(192,132,252,.15)}
-
-/* RESPONSIVE — tablet */
+/* RESPONSIVE */
 @media(max-width:960px){
   nav{padding:1.1rem 1.5rem}
   section{padding:5rem 1.5rem}
   .pgrid{grid-template-columns:1fr 1fr}
-  .pcell:nth-child(1){grid-column:1/3;grid-row:1;min-height:360px}
-  .pcell:nth-child(2){grid-column:1/2;grid-row:2;min-height:240px}
-  .pcell:nth-child(3){grid-column:2/3;grid-row:2;min-height:240px}
-  .pcell:nth-child(4){grid-column:1/3;grid-row:3;min-height:360px}
+  .pcell:nth-child(1){grid-column:1/3;grid-row:1;min-height:340px}
+  .pcell:nth-child(2){grid-column:1/2;grid-row:2;min-height:220px}
+  .pcell:nth-child(3){grid-column:2/3;grid-row:2;min-height:220px}
+  .pcell:nth-child(4){grid-column:1/3;grid-row:3;min-height:340px}
   .rgrid{grid-template-columns:repeat(3,1fr)}
   .cwrap{grid-template-columns:1fr;gap:3rem}
   .crow{grid-template-columns:1fr}
   .hero-stats{gap:2rem}
 }
-
-/* RESPONSIVE — mobile */
 @media(max-width:600px){
   nav{padding:.95rem 1.1rem}
   .nav-pill,.nav-cta{display:none}
   .nav-burger{display:flex}
-
   #hero{padding:6.5rem 1.3rem 4rem;min-height:100svh}
   .hero-h1{font-size:clamp(2.6rem,13vw,4.2rem)}
   .hero-p{font-size:.88rem;max-width:100%}
@@ -265,43 +256,24 @@ footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify
   .hs-num{font-size:2rem}
   .scroll-cue{display:none}
   .o1{width:260px;height:260px}.o2{width:200px;height:200px}.o3{display:none}
-
   section{padding:3.8rem 1.1rem}
   .sh{font-size:clamp(1.75rem,8vw,2.6rem)}
   .ph{flex-direction:column;gap:.9rem;margin-bottom:1.3rem}
   .ph-r{max-width:100%;font-size:.8rem}
-
   .port-tabs{width:100%}
   .ptab{flex:1;text-align:center;font-size:.68rem;padding:.38rem .7rem}
-
   .pgrid{grid-template-columns:1fr}
   .pcell,.pcell:nth-child(1),.pcell:nth-child(2),.pcell:nth-child(3),.pcell:nth-child(4){grid-column:1/-1;grid-row:auto;min-height:200px}
-  .pcell:nth-child(1),.pcell:nth-child(4){min-height:220px}
-
   .rgrid{grid-template-columns:repeat(2,1fr)}
   .rc{min-height:220px}
-  .rc-title{font-size:.82rem}
-
-  .vc-title{font-size:.88rem}
-  .pcell:nth-child(1) .vc-title,.pcell:nth-child(4) .vc-title{font-size:1rem}
-  .vc-info,.rc-info{padding:.85rem .95rem}
-
   .sgrid{grid-template-columns:1fr}
   .sc{padding:1.8rem 1.4rem}
-  .sc-n{font-size:3rem;margin-bottom:1.2rem}
-
-  .sh[style]{font-size:clamp(1.9rem,9vw,2.8rem) !important}
-  .clinks{gap:.45rem}
-  .clink{padding:.72rem .88rem;font-size:.76rem}
-
+  .cwrap{gap:2rem}
   footer{padding:1.6rem 1.1rem;flex-direction:column;text-align:center;gap:.7rem}
   .fr{justify-content:center}
-
-  .m{padding:1.6rem 1.3rem;border-radius:12px}
-  .m h3{font-size:1.35rem}
+  .m{padding:1.6rem 1.3rem}
   .macts{flex-direction:column}
   .macts .btn-w,.macts .btn-g{width:100%;text-align:center}
-  .admin-hint{bottom:.9rem;right:.9rem;font-size:.75rem;padding:.55rem .9rem}
 }
 </style>
 </head>
@@ -310,7 +282,6 @@ footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify
 <div id="cur"></div>
 <div id="curR"></div>
 
-<!-- NAV -->
 <nav>
   <a href="#hero" class="nav-logo">Adarsh</a>
   <div class="nav-pill">
@@ -322,23 +293,21 @@ footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify
   <div class="nav-right">
     <div class="admin-badge" id="adminBadge">
       <span class="admin-dot"></span>Admin
-      <button class="admin-logout" onclick="logout()">✕</button>
+      <button class="admin-logout-btn" id="logoutBtn">✕</button>
     </div>
     <a href="#contact" class="nav-cta">Let's talk</a>
-    <button class="nav-burger" id="navBurger" onclick="toggleMenu()"><span></span><span></span></button>
+    <button class="nav-burger" id="navBurger"><span></span><span></span></button>
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="mob-menu" id="mobMenu">
-  <a href="#hero" onclick="closeMenu()">Home</a>
-  <a href="#portfolio" onclick="closeMenu()">Work</a>
-  <a href="#services" onclick="closeMenu()">Services</a>
-  <a href="#contact" onclick="closeMenu()">Contact</a>
-  <a href="#contact" class="mob-cta-btn" onclick="closeMenu()">Let's talk</a>
+  <a href="#hero" class="mob-link">Home</a>
+  <a href="#portfolio" class="mob-link">Work</a>
+  <a href="#services" class="mob-link">Services</a>
+  <a href="#contact" class="mob-link">Contact</a>
+  <a href="#contact" class="mob-link mob-cta-btn">Let's talk</a>
 </div>
 
-<!-- HERO -->
 <section id="hero">
   <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
   <div class="hero-badge"><span class="badge-dot"></span>Available for new projects</div>
@@ -356,10 +325,8 @@ footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify
   <div class="scroll-cue"><div class="scroll-line"></div><span class="scroll-txt">scroll</span></div>
 </section>
 
-<!-- MARQUEE -->
 <div class="mq-row"><div class="mq-track" id="mqt"></div></div>
 
-<!-- PORTFOLIO -->
 <section id="portfolio">
   <div class="ph">
     <div>
@@ -369,42 +336,40 @@ footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify
     <p class="ph-r">A curated selection of commercial, narrative, and social projects.</p>
   </div>
   <div class="port-tabs">
-    <button class="ptab active" id="tab-btn-longform" onclick="switchTab('longform',this)">Long-form</button>
-    <button class="ptab" id="tab-btn-reels" onclick="switchTab('reels',this)">Reels</button>
+    <button class="ptab active" data-tab="longform">Long-form</button>
+    <button class="ptab" data-tab="reels">Reels</button>
   </div>
   <div class="tab-panel active" id="tab-longform"><div class="pgrid" id="pgrid"></div></div>
   <div class="tab-panel" id="tab-reels"><div class="rgrid" id="rgrid"></div></div>
 </section>
 
-<!-- SERVICES -->
 <section id="services">
   <p class="stag">What I do</p>
   <h2 class="sh">Services</h2>
   <div class="sgrid">
-    <div class="sc"><div class="sc-n">01</div><span class="sc-icon">🎬</span><div class="sc-arr">↗</div><h3 class="sc-name">Video Editing</h3><p class="sc-desc">Cinematic cuts, pacing, and storytelling. From raw clips to a polished film that commands attention and drives results.</p></div>
-    <div class="sc"><div class="sc-n">02</div><span class="sc-icon">✨</span><div class="sc-arr">↗</div><h3 class="sc-name">Motion Graphics</h3><p class="sc-desc">Animated titles, kinetic sequences, and visual effects that give your content a distinct, memorable visual language.</p></div>
-    <div class="sc"><div class="sc-n">03</div><span class="sc-icon">🎨</span><div class="sc-arr">↗</div><h3 class="sc-name">Color Grading</h3><p class="sc-desc">Cinematic color science — building a look that sets the mood, matches the brand, and holds on any screen.</p></div>
-    <div class="sc"><div class="sc-n">04</div><span class="sc-icon">📱</span><div class="sc-arr">↗</div><h3 class="sc-name">Reels &amp; Short-Form</h3><p class="sc-desc">Scroll-stopping content engineered for Instagram, YouTube Shorts, and TikTok. High-retention, viral-ready cuts.</p></div>
+    <div class="sc"><div class="sc-n">01</div><span class="sc-icon">🎬</span><div class="sc-arr">↗</div><h3 class="sc-name">Video Editing</h3><p class="sc-desc">Cinematic cuts, pacing, and storytelling. From raw clips to a polished film that commands attention.</p></div>
+    <div class="sc"><div class="sc-n">02</div><span class="sc-icon">✨</span><div class="sc-arr">↗</div><h3 class="sc-name">Motion Graphics</h3><p class="sc-desc">Animated titles, kinetic sequences, and visual effects that give your content a distinct visual language.</p></div>
+    <div class="sc"><div class="sc-n">03</div><span class="sc-icon">🎨</span><div class="sc-arr">↗</div><h3 class="sc-name">Color Grading</h3><p class="sc-desc">Cinematic color science — building a look that sets the mood and holds beautifully on any screen.</p></div>
+    <div class="sc"><div class="sc-n">04</div><span class="sc-icon">📱</span><div class="sc-arr">↗</div><h3 class="sc-name">Reels &amp; Short-Form</h3><p class="sc-desc">Scroll-stopping content engineered for Instagram, YouTube Shorts, and TikTok.</p></div>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="cglow"></div>
   <div class="cwrap">
     <div class="cleft">
       <p class="stag">Get in touch</p>
       <h2 class="sh" style="font-size:clamp(2.2rem,5vw,3.8rem)">Let's build<br>something <em>great.</em></h2>
-      <p class="body">Have a project, collab, or just want to talk craft? I'd love to hear from you.</p>
+      <p class="body-txt">Have a project, collab, or just want to talk craft? I'd love to hear from you.</p>
       <div class="clinks">
-        <a href="mailto:hello@adarsh.com" class="clink"><span>✉ &nbsp;Email me directly</span><span class="clink-arr">↗</span></a>
+        <a href="/cdn-cgi/l/email-protection#660e030a0a092607020714150e4805090b" class="clink"><span>✉ &nbsp;Email me directly</span><span class="clink-arr">↗</span></a>
         <a href="#" class="clink"><span>📸 &nbsp;Instagram</span><span class="clink-arr">↗</span></a>
         <a href="#" class="clink"><span>▶ &nbsp;YouTube channel</span><span class="clink-arr">↗</span></a>
         <a href="#" class="clink"><span>💼 &nbsp;LinkedIn</span><span class="clink-arr">↗</span></a>
       </div>
     </div>
     <div>
-      <form class="cform" onsubmit="doSubmit(event)">
+      <form class="cform" id="contactForm">
         <div class="crow">
           <input type="text" placeholder="Your name" required/>
           <input type="email" placeholder="Email address" required/>
@@ -417,17 +382,14 @@ footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="fl">Adarsh</div>
   <div class="fc">© 2026 Adarsh. All rights reserved.</div>
   <div class="fr"><a href="#portfolio">Work</a><a href="#services">Services</a><a href="#contact">Contact</a></div>
 </footer>
 
-<!-- ADMIN HINT -->
-<div class="admin-hint" onclick="openPwModal()">⬡</div>
+<button class="admin-hint" id="adminHintBtn">⬡</button>
 
-<!-- PASSWORD MODAL -->
 <div class="mbg" id="pwBg">
   <div class="m">
     <h3>Admin access</h3>
@@ -435,18 +397,17 @@ footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify
     <div class="mf">
       <label>Password</label>
       <div class="pw-wrap">
-        <input type="password" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"/>
-        <button class="pw-eye" onclick="togglePw()">👁</button>
+        <input type="password" id="pwInput" placeholder="Enter password"/>
+        <button class="pw-eye" id="pwEyeBtn">👁</button>
       </div>
       <div class="pw-err" id="pwErr"></div>
     </div>
-    <button class="btn-w" id="loginBtn" onclick="doLogin()">Unlock</button>
-    <div style="margin-top:.75rem"><button class="btn-g" onclick="closePwModal()" style="width:100%;text-align:center">Cancel</button></div>
+    <button class="btn-w" id="loginBtn">Unlock</button>
+    <div style="margin-top:.75rem"><button class="btn-g" id="pwCancelBtn" style="width:100%;text-align:center">Cancel</button></div>
   </div>
 </div>
 
-<!-- ADD VIDEO MODAL -->
-<div class="mbg" id="mbg">
+<div class="mbg" id="addBg">
   <div class="m">
     <h3>Add a project</h3>
     <p class="msub">Upload to YouTube first (Unlisted is fine), then paste the video ID below.</p>
@@ -462,213 +423,245 @@ footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify
     <div class="mf"><label>YouTube Video ID</label><input id="my" placeholder="e.g. dQw4w9WgXcQ"/></div>
     <p class="mhint">Copy the ID after <code>?v=</code> in the YouTube URL — nothing else needed.</p>
     <div class="macts">
-      <button class="btn-w" onclick="saveVid()">Add to portfolio</button>
-      <button class="btn-g" onclick="closeM()">Cancel</button>
+      <button class="btn-w" id="saveVidBtn">Add to portfolio</button>
+      <button class="btn-g" id="addCancelBtn">Cancel</button>
     </div>
   </div>
 </div>
 
-<script>
-// ─── CONFIG — change your password here ───
-const ADMIN_PASSWORD = 'adarsh2026';
-const KEY = 'adarsh_v5';
-// ──────────────────────────────────────────
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+document.addEventListener('DOMContentLoaded', function() {
 
-const DEF = [
-  {id:1,title:'AI Video Ad',tag:'Commercial',yt:'jXlnubr8k78',type:'longform'},
-  {id:2,title:'The Journey — Short Film',tag:'Short Film',yt:'ysz5S6PUM-U',type:'longform'},
-  {id:3,title:'Music Video Cut',tag:'Music Video',yt:'ZbZSe6N_BXs',type:'longform'},
-  {id:4,title:'Lifestyle Campaign',tag:'Commercial',yt:'M7lc1UVf-VE',type:'longform'},
-  {id:5,title:'Street Style Reel',tag:'Instagram',yt:'9bZkp7q19f0',type:'reels'},
-  {id:6,title:'Documentary Style',tag:'TikTok',yt:'iQc8hm-ftLw',type:'reels'},
-  {id:7,title:'Travel Montage',tag:'Shorts',yt:'YQHsXMglC9A',type:'reels'},
-  {id:8,title:'Brand Teaser',tag:'Instagram',yt:'ktvTqknDobU',type:'reels'},
-  {id:9,title:'Event Highlight',tag:'Shorts',yt:'2vjPBrBU-TM',type:'reels'},
-  {id:10,title:'Studio Session',tag:'Instagram',yt:'lp-EO5I60KA',type:'reels'},
-];
+  // ── CONFIG ──
+  var PASS = 'adarsh2026';
+  var KEY  = 'adarsh_v6';
 
-let vids = [];
-try { vids = JSON.parse(localStorage.getItem(KEY)) || DEF; } catch { vids = DEF; }
-let isAdmin = false;
+  var DEF = [
+    {id:1,title:'Cinematic Brand Film',tag:'Commercial',yt:'LXb3EKWsInQ',type:'longform'},
+    {id:2,title:'The Journey — Short Film',tag:'Short Film',yt:'ysz5S6PUM-U',type:'longform'},
+    {id:3,title:'Music Video Cut',tag:'Music Video',yt:'ZbZSe6N_BXs',type:'longform'},
+    {id:4,title:'Lifestyle Campaign',tag:'Commercial',yt:'M7lc1UVf-VE',type:'longform'},
+    {id:5,title:'Street Style Reel',tag:'Instagram',yt:'9bZkp7q19f0',type:'reels'},
+    {id:6,title:'Documentary Style',tag:'TikTok',yt:'https://www.youtube.com/shorts/iQc8hm-ftLw',type:'reels'},
+    {id:7,title:'Travel Montage',tag:'Shorts',yt:'YQHsXMglC9A',type:'reels'},
+    {id:8,title:'Brand Teaser',tag:'Instagram',yt:'ktvTqknDobU',type:'reels'},
+    {id:9,title:'Event Highlight',tag:'Shorts',yt:'2vjPBrBU-TM',type:'reels'},
+    {id:10,title:'Studio Session',tag:'Instagram',yt:'lp-EO5I60KA',type:'reels'},
+  ];
 
-const save = () => localStorage.setItem(KEY, JSON.stringify(vids));
+  var vids = [];
+  try { vids = JSON.parse(localStorage.getItem(KEY)) || DEF; } catch(e) { vids = DEF; }
+  var isAdmin = false;
+  var addType = 'longform';
 
-// ─── TABS ───
-function switchTab(tab, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  btn.classList.add('active');
-}
+  function save() { localStorage.setItem(KEY, JSON.stringify(vids)); }
 
-// ─── RENDER ───
-function vcHTML(v) {
-  const src = `https://www.youtube.com/embed/${v.yt}?rel=0&modestbranding=1`;
-  return `<div class="pcell"><div class="vc">
-    <div class="vc-thumb"><iframe src="${src}" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-    <div class="vc-shade"></div>
-    <div class="vc-play"><svg width="15" height="15" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-    <div class="vc-info"><div class="vc-title">${v.title}</div><div class="vc-tag">${v.tag}</div></div>
-    <button class="vc-del" onclick="delV(${v.id},event)">✕</button>
-  </div></div>`;
-}
-
-function rcHTML(v) {
-  const src = `https://www.youtube.com/embed/${v.yt}?rel=0&modestbranding=1`;
-  return `<div class="rcell"><div class="rc">
-    <div class="rc-thumb"><iframe src="${src}" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-    <div class="rc-shade"></div>
-    <div class="rc-play"><svg width="13" height="13" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-    <div class="rc-info"><div class="rc-title">${v.title}</div><div class="rc-tag">${v.tag}</div></div>
-    <button class="rc-del" onclick="delV(${v.id},event)">✕</button>
-  </div></div>`;
-}
-
-function addRowHTML(type) {
-  return `<div class="add-row" onclick="openM('${type}')">
-    <div class="add-inner"><div class="add-circ">+</div><span>Add new ${type==='reels'?'reel':'project'}</span></div>
-  </div>`;
-}
-
-function render() {
-  const long = vids.filter(v => v.type === 'longform');
-  const reels = vids.filter(v => v.type === 'reels');
-
-  const pg = document.getElementById('pgrid');
-  pg.innerHTML = long.length
-    ? long.map(vcHTML).join('') + addRowHTML('longform')
-    : `<div class="empty-state">No long-form projects yet.</div>` + addRowHTML('longform');
-
-  const rg = document.getElementById('rgrid');
-  rg.innerHTML = reels.length
-    ? reels.map(rcHTML).join('') + addRowHTML('reels')
-    : `<div class="empty-state">No reels yet.</div>` + addRowHTML('reels');
-}
-
-function delV(id, e) {
-  e.stopPropagation();
-  if (!isAdmin) return;
-  if (!confirm('Remove this from portfolio?')) return;
-  vids = vids.filter(v => v.id !== id);
-  save(); render();
-}
-
-// ─── ADD VIDEO ───
-function openM(type) {
-  if (!isAdmin) return;
-  document.getElementById('mtype').value = type || 'longform';
-  document.getElementById('mbg').classList.add('open');
-}
-function closeM() { document.getElementById('mbg').classList.remove('open'); }
-document.getElementById('mbg').addEventListener('click', e => { if (e.target === e.currentTarget) closeM(); });
-
-function saveVid() {
-  const t = document.getElementById('mt').value.trim();
-  const type = document.getElementById('mtype').value;
-  const g = document.getElementById('mg').value.trim();
-  const y = document.getElementById('my').value.trim().replace(/.*[?&]v=/,'').split('&')[0];
-  if (!t || !y) { alert('Please fill in the title and YouTube Video ID.'); return; }
-  vids.unshift({ id: Date.now(), title: t, tag: g || (type==='reels'?'Reel':'Video'), yt: y, type });
-  save(); render(); closeM();
-  ['mt','mg','my'].forEach(id => document.getElementById(id).value = '');
-}
-
-// ─── ADMIN / PASSWORD ───
-function openPwModal() {
-  document.getElementById('pwBg').classList.add('open');
-  setTimeout(() => document.getElementById('pwInput').focus(), 100);
-}
-function closePwModal() {
-  document.getElementById('pwBg').classList.remove('open');
-  document.getElementById('pwErr').textContent = '';
-  document.getElementById('pwInput').value = '';
-}
-document.getElementById('pwBg').addEventListener('click', e => { if (e.target === e.currentTarget) closePwModal(); });
-
-function doLogin() {
-  const val = document.getElementById('pwInput').value;
-  if (val === ADMIN_PASSWORD) {
-    isAdmin = true;
-    document.body.classList.add('admin');
-    document.getElementById('adminBadge').classList.add('show');
-    closePwModal();
-    render();
-  } else {
-    const err = document.getElementById('pwErr');
-    err.textContent = 'Incorrect password.';
-    document.getElementById('pwInput').value = '';
-    document.getElementById('pwInput').focus();
-    setTimeout(() => err.textContent = '', 2000);
+  // ── RENDER ──
+  function embedSrc(yt) {
+    return 'https://www.youtube.com/embed/' + yt + '?rel=0&modestbranding=1&playsinline=1';
   }
-}
 
-function logout() {
-  isAdmin = false;
-  document.body.classList.remove('admin');
-  document.getElementById('adminBadge').classList.remove('show');
-  render();
-}
+  function vcHTML(v) {
+    var src = embedSrc(v.yt);
+    return '<div class="pcell"><div class="vc">' +
+      '<div class="vc-thumb"><iframe src="' + src + '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>' +
+      '<div class="vc-shade"></div>' +
+      '<div class="vc-play"><svg width="15" height="15" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="#f5f2ee"/></svg></div>' +
+      '<div class="vc-info"><div class="vc-title">' + v.title + '</div><div class="vc-tag">' + v.tag + '</div></div>' +
+      '<button class="vc-del" data-id="' + v.id + '">✕</button>' +
+    '</div></div>';
+  }
 
-function togglePw() {
-  const inp = document.getElementById('pwInput');
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-}
+  function rcHTML(v) {
+    var src = embedSrc(v.yt);
+    return '<div class="rcell"><div class="rc">' +
+      '<div class="rc-thumb"><iframe src="' + src + '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>' +
+      '<div class="rc-shade"></div>' +
+      '<div class="rc-play"><svg width="13" height="13" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="#f5f2ee"/></svg></div>' +
+      '<div class="rc-info"><div class="rc-title">' + v.title + '</div><div class="rc-tag">' + v.tag + '</div></div>' +
+      '<button class="rc-del" data-id="' + v.id + '">✕</button>' +
+    '</div></div>';
+  }
 
-// ─── CONTACT FORM ───
-function doSubmit(e) {
-  e.preventDefault();
-  const b = document.getElementById('sbtn');
-  b.textContent = 'Message sent ✓'; b.style.opacity = '.65'; b.disabled = true;
-  setTimeout(() => { b.textContent = 'Send message'; b.style.opacity = ''; b.disabled = false; e.target.reset(); }, 3000);
-}
+  function addRowHTML(type) {
+    return '<div class="add-row" data-addtype="' + type + '">' +
+      '<div class="add-inner"><div class="add-circ">+</div><span>Add new ' + (type==='reels'?'reel':'project') + '</span></div>' +
+    '</div>';
+  }
 
-// ─── MOBILE MENU ───
-function toggleMenu() {
-  const burger = document.getElementById('navBurger');
-  const menu = document.getElementById('mobMenu');
-  burger.classList.toggle('open');
-  menu.classList.toggle('open');
-  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-}
-function closeMenu() {
-  document.getElementById('navBurger').classList.remove('open');
-  document.getElementById('mobMenu').classList.remove('open');
-  document.body.style.overflow = '';
-}
+  function render() {
+    var long  = vids.filter(function(v){ return v.type === 'longform'; });
+    var reels = vids.filter(function(v){ return v.type === 'reels'; });
 
-// ─── MARQUEE ───
-const ws = ['Video Editing','Color Grading','Motion Design','Brand Films','Short Form Content','Cinematics','Storytelling','Social Reels'];
-const mqEl = document.getElementById('mqt');
-const mqAll = [...ws,...ws,...ws,...ws];
-mqEl.innerHTML = mqAll.map(w => `<span class="mq-item">${w}<span class="mq-dot"> · </span></span>`).join('');
+    var pg = document.getElementById('pgrid');
+    pg.innerHTML = (long.length ? long.map(vcHTML).join('') : '<div class="empty-state">No long-form projects yet.</div>') + addRowHTML('longform');
 
-// ─── CURSOR ───
-if (window.matchMedia('(pointer:fine)').matches) {
-  document.body.classList.add('cur-on');
-  const c = document.getElementById('cur'), cr = document.getElementById('curR');
-  let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  document.addEventListener('mouseover', e => { if (e.target.closest('a,button,.add-row,.vc-del,.rc-del,.admin-hint')) document.body.classList.add('hov'); });
-  document.addEventListener('mouseout',  e => { if (e.target.closest('a,button,.add-row,.vc-del,.rc-del,.admin-hint')) document.body.classList.remove('hov'); });
-  (function tick() {
-    c.style.left = mx + 'px'; c.style.top = my + 'px';
-    rx += (mx - rx) * .22; ry += (my - ry) * .22;
-    cr.style.left = rx + 'px'; cr.style.top = ry + 'px';
-    requestAnimationFrame(tick);
-  })();
-}
+    var rg = document.getElementById('rgrid');
+    rg.innerHTML = (reels.length ? reels.map(rcHTML).join('') : '<div class="empty-state">No reels yet.</div>') + addRowHTML('reels');
 
-// ─── ACTIVE NAV ───
-const navSecs = [...document.querySelectorAll('section[id]')];
-const navAs = [...document.querySelectorAll('.nav-pill a')];
-window.addEventListener('scroll', () => {
-  let cur = 'hero';
-  navSecs.forEach(s => { if (scrollY >= s.offsetTop - 140) cur = s.id; });
-  navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
-}, { passive: true });
+    // attach delete listeners
+    document.querySelectorAll('.vc-del, .rc-del').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (!isAdmin) return;
+        if (!confirm('Remove this from portfolio?')) return;
+        var id = parseInt(btn.getAttribute('data-id'));
+        vids = vids.filter(function(v){ return v.id !== id; });
+        save(); render();
+      });
+    });
 
-// ─── INIT ───
-render();
-</script>
-</body>
-</html>
+    // attach add-row listeners
+    document.querySelectorAll('.add-row').forEach(function(row) {
+      row.addEventListener('click', function() {
+        if (!isAdmin) return;
+        addType = row.getAttribute('data-addtype');
+        document.getElementById('mtype').value = addType;
+        document.getElementById('addBg').classList.add('open');
+      });
+    });
+  }
+
+  // ── TABS ──
+  document.querySelectorAll('.ptab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var tab = btn.getAttribute('data-tab');
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+      document.querySelectorAll('.ptab').forEach(function(b){ b.classList.remove('active'); });
+      document.getElementById('tab-' + tab).classList.add('active');
+      btn.classList.add('active');
+    });
+  });
+
+  // ── ADD VIDEO ──
+  document.getElementById('saveVidBtn').addEventListener('click', function() {
+    var t = document.getElementById('mt').value.trim();
+    var type = document.getElementById('mtype').value;
+    var g = document.getElementById('mg').value.trim();
+    var raw = document.getElementById('my').value.trim();
+    // handle full URLs: youtube.com/watch?v=ID, youtu.be/ID, youtube.com/shorts/ID
+    var y = raw;
+    var m = raw.match(/(?:shorts\/|watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (m) y = m[1];
+    else y = raw.replace(/.*[?&]v=/,'').split('&')[0].split('?')[0].trim();
+    if (!t || !y) { alert('Please fill in the title and YouTube Video ID.'); return; }
+    vids.unshift({ id: Date.now(), title: t, tag: g || (type==='reels'?'Reel':'Video'), yt: y, type: type });
+    save(); render();
+    document.getElementById('addBg').classList.remove('open');
+    ['mt','mg','my'].forEach(function(id){ document.getElementById(id).value = ''; });
+  });
+
+  document.getElementById('addCancelBtn').addEventListener('click', function() {
+    document.getElementById('addBg').classList.remove('open');
+  });
+  document.getElementById('addBg').addEventListener('click', function(e) {
+    if (e.target === e.currentTarget) document.getElementById('addBg').classList.remove('open');
+  });
+
+  // ── ADMIN / PASSWORD ──
+  document.getElementById('adminHintBtn').addEventListener('click', function() {
+    document.getElementById('pwBg').classList.add('open');
+    setTimeout(function(){ document.getElementById('pwInput').focus(); }, 100);
+  });
+
+  function closePw() {
+    document.getElementById('pwBg').classList.remove('open');
+    document.getElementById('pwErr').textContent = '';
+    document.getElementById('pwInput').value = '';
+  }
+
+  document.getElementById('pwCancelBtn').addEventListener('click', closePw);
+  document.getElementById('pwBg').addEventListener('click', function(e) {
+    if (e.target === e.currentTarget) closePw();
+  });
+
+  document.getElementById('loginBtn').addEventListener('click', function() {
+    var val = document.getElementById('pwInput').value;
+    if (val === PASS) {
+      isAdmin = true;
+      document.body.classList.add('admin');
+      document.getElementById('adminBadge').classList.add('show');
+      closePw(); render();
+    } else {
+      document.getElementById('pwErr').textContent = 'Incorrect password.';
+      document.getElementById('pwInput').value = '';
+      document.getElementById('pwInput').focus();
+      setTimeout(function(){ document.getElementById('pwErr').textContent = ''; }, 2000);
+    }
+  });
+
+  document.getElementById('pwInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') document.getElementById('loginBtn').click();
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', function() {
+    isAdmin = false;
+    document.body.classList.remove('admin');
+    document.getElementById('adminBadge').classList.remove('show');
+    render();
+  });
+
+  document.getElementById('pwEyeBtn').addEventListener('click', function() {
+    var inp = document.getElementById('pwInput');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+  });
+
+  // ── CONTACT FORM ──
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var b = document.getElementById('sbtn');
+    b.textContent = 'Message sent ✓'; b.style.opacity = '.65'; b.disabled = true;
+    setTimeout(function(){ b.textContent = 'Send message'; b.style.opacity = ''; b.disabled = false; e.target.reset(); }, 3000);
+  });
+
+  // ── MOBILE MENU ──
+  document.getElementById('navBurger').addEventListener('click', function() {
+    var burger = document.getElementById('navBurger');
+    var menu = document.getElementById('mobMenu');
+    burger.classList.toggle('open');
+    menu.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.mob-link').forEach(function(a) {
+    a.addEventListener('click', function() {
+      document.getElementById('navBurger').classList.remove('open');
+      document.getElementById('mobMenu').classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ── MARQUEE ──
+  var ws = ['Video Editing','Color Grading','Motion Design','Brand Films','Short Form Content','Cinematics','Storytelling','Social Reels'];
+  var all = ws.concat(ws).concat(ws).concat(ws);
+  document.getElementById('mqt').innerHTML = all.map(function(w) {
+    return '<span class="mq-item">' + w + '<span class="mq-dot"> · </span></span>';
+  }).join('');
+
+  // ── CURSOR ──
+  if (window.matchMedia('(pointer:fine)').matches) {
+    document.body.classList.add('cur-on');
+    var c = document.getElementById('cur'), cr = document.getElementById('curR');
+    var mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+    document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
+    document.addEventListener('mouseover', function(e) {
+      if (e.target.closest('a,button,.add-row')) document.body.classList.add('hov');
+    });
+    document.addEventListener('mouseout', function(e) {
+      if (e.target.closest('a,button,.add-row')) document.body.classList.remove('hov');
+    });
+    (function tick() {
+      c.style.left = mx + 'px'; c.style.top = my + 'px';
+      rx += (mx - rx) * .22; ry += (my - ry) * .22;
+      cr.style.left = rx + 'px'; cr.style.top = ry + 'px';
+      requestAnimationFrame(tick);
+    })();
+  }
+
+  // ── ACTIVE NAV ──
+  var navSecs = Array.from(document.querySelectorAll('section[id]'));
+  var navAs = Array.from(document.querySelectorAll('.nav-pill a'));
+  window.addEventListener('scroll', function() {
+    var cur = 'hero';
+    navSecs.forEach(function(s) { if (scrollY >= s.offsetTop - 140) cur = s.id; });
+    navAs.forEach(function(a) { a.classList.toggle('active', a.getAttribut
